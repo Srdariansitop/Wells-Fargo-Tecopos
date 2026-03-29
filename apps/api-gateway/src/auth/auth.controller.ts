@@ -4,6 +4,8 @@ import { CreateUserDto } from './dto/create-user.dto';
 import { LoginDto } from './dto/login.dto';
 import { UseGuards } from '@nestjs/common';
 import { AuthGuard } from './guards/auth.guard';
+import { Roles } from './decorators/roles.decorator';
+import { RolesGuard } from './guards/roles.guard';
 
 @Controller('auth')
 export class AuthController {
@@ -25,7 +27,8 @@ adminCreate(@Body() createUserDto: CreateUserDto) {
   return this.ssoClient.send({ cmd: 'admin_create_user' }, createUserDto);
 }
 
- @UseGuards(AuthGuard)
+ @UseGuards(AuthGuard, RolesGuard)
+ @Roles('ADMIN')
   @Get('users')
   getAllUsers() {
     return this.ssoClient.send({ cmd: 'get_all_users' }, {});
