@@ -1,0 +1,43 @@
+# --- Dependencias (NUNCA SUBIR) ---
+node_modules/
+/node_modules
+*/node_modules/
+
+# --- Compilación y Salida ---
+dist/
+/dist
+artifacts/
+*.tsbuildinfo
+out/
+
+# --- Configuración Personal y Secretos ---
+.env
+.env.test
+.env.production
+.env.local
+.env.*.local
+
+# --- Archivos de NestJS y TypeScript ---
+nest-cli.json
+tsconfig.json
+tsconfig.build.json
+
+# --- IDEs y Editores ---
+.vscode/
+.idea/
+*.swp
+*.swo
+.DS_Store
+Thumbs.db
+
+# --- Logs y Temporales ---
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+tmp/
+temp/
+
+# --- Prisma (Si lo usas luego) ---
+/prisma/migrations
+*.db

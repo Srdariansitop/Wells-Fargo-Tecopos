@@ -1,0 +1,10 @@
+{
+  "dependencies": {
+    "@nestjs/config": "^4.0.3",
+    "@nestjs/microservices": "^11.1.17",
+    "@nestjs/platform-express": "^11.1.17",
+    "@nestjs/swagger": "^11.2.6",
+    "@nestjs/throttler": "^6.5.0",
+    "swagger-ui-express": "^5.0.1"
+  }
+}
