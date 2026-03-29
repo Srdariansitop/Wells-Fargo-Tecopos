@@ -13,6 +13,11 @@ export class AuthController {
     // Enviamos el comando 'register_user' al microservicio
     return this.ssoClient.send({ cmd: 'register_user' }, createUserDto);
   }
+  @Post('admin/create-user')
+adminCreate(@Body() createUserDto: CreateUserDto) {
+  // Enviamos un comando distinto
+  return this.ssoClient.send({ cmd: 'admin_create_user' }, createUserDto);
+}
 
   @Get('users')
   getAllUsers() {

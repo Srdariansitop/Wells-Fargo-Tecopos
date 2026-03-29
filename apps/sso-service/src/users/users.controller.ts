@@ -12,6 +12,11 @@ export class UsersController {
     // Usamos tu lógica de forceClientRole = true
     return this.usersService.create(data, true);
   }
+  @MessagePattern({ cmd: 'admin_create_user' })
+async adminCreate(@Payload() data: CreateUserDto) {
+  // AQUÍ PASAMOS "false" para que respete el rol del DTO
+  return this.usersService.create(data, false);
+}
 
   @MessagePattern({ cmd: 'get_all_users' })
   async findAll() {
