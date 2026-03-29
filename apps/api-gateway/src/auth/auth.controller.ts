@@ -1,6 +1,7 @@
 import { Controller, Post, Body, Inject, Get } from '@nestjs/common';
 import { ClientProxy } from '@nestjs/microservices';
-import { CreateUserDto } from './dto/create-user.dto'; // Copia el DTO aquí también
+import { CreateUserDto } from './dto/create-user.dto'; 
+import { LoginDto } from './dto/login.dto';
 
 @Controller('auth')
 export class AuthController {
@@ -8,9 +9,12 @@ export class AuthController {
     @Inject('SSO_SERVICE') private readonly ssoClient: ClientProxy,
   ) {}
 
+@Post('login')
+login(@Body() loginDto: LoginDto) { 
+  return this.ssoClient.send({ cmd: 'login_user' }, loginDto);
+}
   @Post('register')
   register(@Body() createUserDto: CreateUserDto) {
-    // Enviamos el comando 'register_user' al microservicio
     return this.ssoClient.send({ cmd: 'register_user' }, createUserDto);
   }
   @Post('admin/create-user')
