@@ -13,7 +13,6 @@ generator client {
   moduleFormat = "cjs"
 }
 
-// Definimos un Enum para manejar los permisos de forma estricta
 enum Role {
   USER
   ADMIN
