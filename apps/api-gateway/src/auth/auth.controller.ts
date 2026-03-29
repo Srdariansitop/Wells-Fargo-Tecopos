@@ -21,9 +21,10 @@ login(@Body() loginDto: LoginDto) {
   register(@Body() createUserDto: CreateUserDto) {
     return this.ssoClient.send({ cmd: 'register_user' }, createUserDto);
   }
+   @UseGuards(AuthGuard, RolesGuard)
+ @Roles('ADMIN')
   @Post('admin/create-user')
 adminCreate(@Body() createUserDto: CreateUserDto) {
-  // Enviamos un comando distinto
   return this.ssoClient.send({ cmd: 'admin_create_user' }, createUserDto);
 }
 

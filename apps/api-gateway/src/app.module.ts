@@ -4,6 +4,7 @@ import { APP_GUARD } from '@nestjs/core';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { AuthModule } from './auth/auth.module';
+import { FinanceModule } from './finance/finance.module';
 
 @Module({
   imports: [
@@ -15,7 +16,8 @@ import { AuthModule } from './auth/auth.module';
         },
       ],
     }),
-    AuthModule
+    AuthModule,
+    FinanceModule
   ],
   controllers: [AppController],
   providers: [
