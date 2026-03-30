@@ -14,7 +14,10 @@ import { JwtModule } from '@nestjs/jwt';
       {
         name: 'SSO_SERVICE', // Nombre interno para inyectar
         transport: Transport.TCP,
-        options: { host: '127.0.0.1', port: 3001 },
+        options: {
+          host: process.env.SSO_HOST || '127.0.0.1',
+          port: Number(process.env.SSO_PORT || 3001),
+        },
       },
     ]),
   ],

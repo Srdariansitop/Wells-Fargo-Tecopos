@@ -8,20 +8,21 @@ import { FinanceModule } from './finance/finance.module';
 
 @Module({
   imports: [
-    ThrottlerModule.forRoot({
-      throttlers: [
-        {
-          ttl: 60000,
-          limit: 10,
-        },
-      ],
-    }),
+    // 1. Configuración simplificada (Sintaxis para v5+)
+    ThrottlerModule.forRoot([
+      {
+        ttl: 60000, // 1 minuto
+        limit: 10,  // máximo 10 peticiones
+      },
+    ]),
     AuthModule,
-    FinanceModule
+    FinanceModule,
   ],
   controllers: [AppController],
   providers: [
-    AppService, 
+    AppService,
+    // 2. Forma estándar y limpia de aplicar el Guard globalmente
+    // NestJS se encarga automáticamente de inyectar el Reflector y las opciones.
     {
       provide: APP_GUARD,
       useClass: ThrottlerGuard,

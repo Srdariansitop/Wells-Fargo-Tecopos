@@ -1,0 +1,83 @@
+services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: tecopos-postgres
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: sso_db
+    ports:
+      - "5433:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d sso_db"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    restart: unless-stopped
+
+  sso-service:
+    image: node:22-alpine
+    container_name: tecopos-sso-service
+    working_dir: /app
+    environment:
+      DATABASE_URL: postgresql://postgres:postgres@postgres:5432/sso_db
+      SSO_BIND_HOST: 0.0.0.0
+      SSO_PORT: 3001
+    command: >
+      sh -c "npm ci &&
+      npx prisma generate &&
+      npm run build &&
+      npx prisma migrate deploy &&
+      node dist/main"
+    volumes:
+      - ./apps/sso-service:/app
+    ports:
+      - "3001:3001"
+    depends_on:
+      postgres:
+        condition: service_healthy
+    restart: unless-stopped
+
+  finance-service:
+    image: node:22-alpine
+    container_name: tecopos-finance-service
+    working_dir: /app
+    environment:
+      FINANCE_BIND_HOST: 0.0.0.0
+      FINANCE_PORT: 3002
+    command: >
+      sh -c "npm ci &&
+      npm run build &&
+      node dist/main"
+    volumes:
+      - ./apps/finance-service:/app
+    ports:
+      - "3002:3002"
+    restart: unless-stopped
+
+  api-gateway:
+    image: node:22-alpine
+    container_name: tecopos-api-gateway
+    working_dir: /app
+    environment:
+      SSO_HOST: sso-service
+      SSO_PORT: 3001
+      FINANCE_HOST: finance-service
+      FINANCE_PORT: 3002
+    command: >
+      sh -c "npm ci &&
+      npm run build &&
+      node dist/main"
+    volumes:
+      - ./apps/api-gateway:/app
+    ports:
+      - "3000:3000"
+    depends_on:
+      - sso-service
+      - finance-service
+    restart: unless-stopped
+
+volumes:
+  postgres_data:
