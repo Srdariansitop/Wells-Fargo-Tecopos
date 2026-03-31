@@ -1,5 +1,5 @@
 # 🏦 Wells-Fargo-Tecopos
-
+![](./pro.png)
 Este repositorio contiene la arquitectura backend del proyecto **Wells-Fargo-Tecopos**, un monorepositorio de microservicios desarrollado con **NestJS**.  
 El sistema integra comunicación orientada a eventos con **Apache Kafka**, persistencia en la nube con **Neon (PostgreSQL)** y consumo de datos externos mediante **MockAPI**.
 
@@ -149,11 +149,6 @@ Una vez hecho el cambio:
 | **Finance Service** | `https://finance-service-production-86e8.up.railway.app` |
 
 ---
-
-### 🚀 Cómo usar
-
-1. **Redeploy** después del cambio en `main.ts`
-2. **Variables de entorno** en Railway:
 
 ## 📡 API Gateway y Endpoints
 
