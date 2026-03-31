@@ -119,7 +119,41 @@ npm run start:all
 Este comando usa `concurrently` para ejecutar el Gateway, SSO y Finance Service al mismo tiempo.
 
 ---
+## 🌐 Enlaces Desplegados (Producción)
 
+**IMPORTANTE:** Antes de usar estos enlaces, debes hacer **1 cambio clave** en el proyecto:
+
+### 🔧 Configuración OBLIGATORIA para Railway
+
+En cada servicio (`main.ts`), cambia esta línea:
+
+```ts
+// ❌ LOCAL (no funciona en Railway)
+await app.listen(3000);
+
+// ✅ PRODUCCIÓN (Railway)
+const port = process.env.PORT || 3000;
+await app.listen(port, '0.0.0.0');
+```
+
+**Local lo dejamos como está** (`localhost:3000`), pero para Railway usa `0.0.0.0` y `process.env.PORT`.
+
+---
+
+Una vez hecho el cambio:
+
+| Servicio | URL |
+|----------|-----|
+| **API Gateway** | `https://api-gateway-production-25b6.up.railway.app` |
+| **SSO Service** | `https://sso-service-production-c161.up.railway.app` |
+| **Finance Service** | `https://finance-service-production-86e8.up.railway.app` |
+
+---
+
+### 🚀 Cómo usar
+
+1. **Redeploy** después del cambio en `main.ts`
+2. **Variables de entorno** en Railway:
 
 ## 📡 API Gateway y Endpoints
 
