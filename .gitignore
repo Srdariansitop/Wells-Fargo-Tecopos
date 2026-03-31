@@ -17,10 +17,6 @@ out/
 .env.local
 .env.*.local
 
-# --- Archivos de NestJS y TypeScript ---
-nest-cli.json
-tsconfig.json
-tsconfig.build.json
 
 # --- IDEs y Editores ---
 .vscode/
