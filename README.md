@@ -306,6 +306,7 @@ Wells-Fargo-Tecopos/
 ```
 
 ---
+![Diagrama del sistema](./diagrama.png)
 
 ## 📌 Notas
 
