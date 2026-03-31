@@ -24,7 +24,6 @@ export class AuthGuard implements CanActivate {
         secret: process.env.JWT_SECRET || 'WELLS_FARGO_SECRET_KEY',
       });
       
-      // Seteamos el payload (id, email, role) en el request para que los controladores lo usen
       request['user'] = payload;
     } catch {
       throw new UnauthorizedException('Token inválido o expirado');
