@@ -1,16 +1,22 @@
-FROM node:20-alpine AS build
+FROM node:22-alpine AS builder
+WORKDIR /app
 
-WORKDIR /usr/src/app
-
-# Copiamos archivos de dependencias de la raíz
 COPY package*.json ./
 RUN npm install
+RUN npm install @nestjs/config @nestjs/swagger @nestjs/throttler @nestjs/jwt class-validator class-transformer
 
-# Copiamos todo el código del monorepo
 COPY . .
+RUN npm run build
 
-# Compilamos específicamente el gateway
-RUN ./node_modules/.bin/nest build api-gateway
+FROM node:22-alpine AS runner
+WORKDIR /app
+ENV NODE_ENV=production
 
-# Comando de ejecución apuntando al build del gateway
-CMD ["node", "dist/apps/api-gateway/main"]
+COPY package*.json ./
+RUN npm install --omit=dev
+RUN npm install --omit=dev @nestjs/config @nestjs/swagger @nestjs/throttler @nestjs/jwt class-validator class-transformer
+
+COPY --from=builder /app/dist ./dist
+
+EXPOSE 3000
+CMD ["node", "dist/main"]
